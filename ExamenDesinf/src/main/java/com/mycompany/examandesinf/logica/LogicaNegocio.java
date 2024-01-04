@@ -8,6 +8,8 @@ import com.mycompany.examendesinf.dto.Personal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
+import java.util.OptionalDouble;
 import java.util.Set;
 
 /**
@@ -47,16 +49,19 @@ public class LogicaNegocio {
       return lstDepartamentos;
     }
     public static double edadMediaDepartamento(String depto){
-        int numPersonas=0;
-        int sumaEdades=0;
-        for (Personal p:lstPersonal){
-            if (p.getCodDepartamento().equals(depto)){
-                numPersonas++;
-                sumaEdades+=p.getEdad();
-            }
-        }
-        if (numPersonas==0) return 0;
-        else return sumaEdades/numPersonas;
+//        int numPersonas=0;
+//        int sumaEdades=0;
+//        for (Personal p:lstPersonal){
+//            if (p.getCodDepartamento().equals(depto)){
+//                numPersonas++;
+//                sumaEdades+=p.getEdad();
+//            }
+//        }
+//        if (numPersonas==0) return 0;
+//        else return sumaEdades/numPersonas;
+        OptionalDouble doble=lstPersonal.stream().filter(d->d.getCodDepartamento().equals(depto))
+                .mapToInt(p->p.getEdad()).average();
+        return doble.isPresent()?doble.getAsDouble():0;
     }
     public static List<Personal> getListaPersonalDepartamento(String depto){
         List<Personal> lista=new ArrayList<>();
